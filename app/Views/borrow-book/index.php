@@ -48,20 +48,20 @@
 					</thead>
 					<tbody class="list">
 						<?php foreach ($list as $key => $data): ?>
-						<tr>
-							<th scope="row">
+						<tr<?php echo $data->end < date('Y-m-d H:i:s') ? ' class="table-info text-black"': '' ?>>
+							<th>
 								<?= $data->id ?>
 							</th>
-							<td class="budget">
+							<td>
 								<?= $data->username ?>
 							</td>
-							<td class="budget">
+							<td>
 								<?= $data->booksname ?>
 							</td>
-							<td class="budget">
+							<td>
 								<?= $data->start ?>
 							</td>
-							<td class="budget">
+							<td>
 								<?= $data->end ?>
 							</td>
 							<td>

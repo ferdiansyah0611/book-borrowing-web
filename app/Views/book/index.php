@@ -38,10 +38,11 @@
 				<table class="table align-items-center table-flush">
 					<thead class="thead-light">
 						<tr>
-							<th scope="col" class="sort" data-sort="name">ID</th>
-							<th scope="col" class="sort" data-sort="budget">Name</th>
-							<th scope="col" class="sort" data-sort="status">Created</th>
-							<th scope="col" class="sort" data-sort="status">Action</th>
+							<th scope="col" class="sort">ID</th>
+							<th scope="col" class="sort">Name</th>
+							<th scope="col" class="sort">Author</th>
+							<th scope="col" class="sort">Created</th>
+							<th scope="col" class="sort">Action</th>
 						</tr>
 					</thead>
 					<tbody class="list">
@@ -50,8 +51,11 @@
 							<th scope="row">
 								<?= $data['id'] ?>
 							</th>
-							<td class="budget">
+							<td>
 								<?= $data['name'] ?>
+							</td>
+							<td>
+								<?= $data['author'] ?>
 							</td>
 							<td>
 								<?= $data['created_at'] ?>

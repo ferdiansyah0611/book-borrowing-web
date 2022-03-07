@@ -32,8 +32,8 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
-$routes->get('/chart', 'ChartController::chart');
+$routes->get('/', 'Home::index', ['filter' => 'authorize']);
+$routes->get('/chart', 'ChartController::chart', ['filter' => 'authorize']);
 $routes->group('auth', function($routes){
     $routes->get('signin', 'Auth::signin', ['as' => 'signin']);
     $routes->post('login', 'Auth::login', ['as' => 'login']);

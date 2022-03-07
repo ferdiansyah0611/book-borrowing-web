@@ -12,6 +12,9 @@ class Books extends BaseController
 		$this->data['active'] = 'book';
 		$this->rules = [
 		    'name' => 'required|min_length[3]',
+		    'name_publisher' => 'required|min_length[3]',
+		    'year_publisher' => 'required',
+		    'author' => 'required|min_length[3]',
 		    'description' => 'required|min_length[8]',
 		];
 	}
@@ -21,6 +24,9 @@ class Books extends BaseController
 		$data = [
 			'user_id' => $this->user['id'],
 			'name' => $request->getPost('name'),
+			'name_publisher' => $request->getPost('name_publisher'),
+			'year_publisher' => $request->getPost('year_publisher'),
+			'author' => $request->getPost('author'),
 			'description' => $request->getPost('description'),
 		];
 		if($request->getPost('id')){
@@ -34,6 +40,8 @@ class Books extends BaseController
 		$book = new Book();
 		if(isset($_GET['search'])){
 			$book->like('name', $_GET['search']);
+			$book->orLike('author', $_GET['search']);
+			$book->orLike('name_publisher', $_GET['search']);
 		}
 		$this->data['list'] = $book->paginate(10);
 		$this->data['pager'] = $book->pager;

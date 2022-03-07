@@ -14,6 +14,9 @@ class BookSeed extends Seeder
 			$book->save([
 				'user_id' => 1,
 				'name' => 'book ' . $i,
+				'name_publisher' => 'Fairy Tech',
+		    	'year_publisher' => '2022',
+		    	'author' => 'Ferdiansyah',
 				'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
 				'created_at' => date("Y-m-d H:i:s")
 			]);

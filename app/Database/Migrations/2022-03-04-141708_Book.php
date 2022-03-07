@@ -22,6 +22,18 @@ class Book extends Migration
                 'type' => 'TEXT',
                 'null' => true,
             ],
+            'name_publisher' => [
+                'type' => 'TEXT',
+                'null' => true,
+            ],
+            'year_publisher' => [
+                'type' => 'YEAR',
+                'null' => true,
+            ],
+            'author' => [
+                'type' => 'TEXT',
+                'null' => true,
+            ],
             'description' => [
                 'type' => 'LONGTEXT',
                 'null' => true,
