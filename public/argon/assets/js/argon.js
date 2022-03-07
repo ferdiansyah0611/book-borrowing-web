@@ -880,7 +880,7 @@ var SalesChart = (function() {
   function init($chart) {
   	if(location.pathname === '/'){
   		$.ajax({
-  			url: 'http://localhost:8080/chart',
+  			url: '/chart',
   			success(res){
   				const month = []
   				const value = []
