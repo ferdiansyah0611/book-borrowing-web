@@ -183,14 +183,19 @@ Dashboard
 							<td>
 								<?= $data['created_at'] ?>
 							</td>
+							<?php if($user['role'] == 'admin'): ?>
 							<td>
-								<?php if($user['role'] == 'admin'): ?>
 								<a href="<?= route_to('App\Controllers\ProductController::edit', $data['id']) ?>" class="btn btn-sm btn-primary">Edit</a>
 								<button data-id="<?= $data['id']?>" type="submit" class="btn btn-sm btn-danger deleted">Remove</button>
-								<?php endif; ?>
 							</td>
+							<?php endif; ?>
 						</tr>
 						<?php endforeach; ?>
+						<?php if (count($list) == 0): ?>
+							<tr>
+								<td>no records</td>
+							</tr>
+						<?php endif ?>
 					</tbody>
 				</table>
 			</div>

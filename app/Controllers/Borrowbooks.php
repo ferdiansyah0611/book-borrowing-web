@@ -12,6 +12,13 @@ class Borrowbooks extends BaseController
 	{
 		$this->data['active'] = 'borrow-book';
 	}
+	public function _admin($run)
+	{
+		if($this->user['role'] == 'user'){
+			return redirect()->back();
+		}
+		return $run();
+	}
 	public function _wrap()
 	{
 		$request = $this->request;
@@ -66,12 +73,14 @@ class Borrowbooks extends BaseController
 	}
 	public function edit(int $id)
 	{
-		$model = new Borrowbook();
-		$book = new Book();
-		$this->data['data'] = $model->where('id', $id)->first();
-		$this->data['book'] = $book->find($this->data['data']['book_id']);
+		return $this->_admin(function(){
+			$model = new Borrowbook();
+			$book = new Book();
+			$this->data['data'] = $model->where('id', $id)->first();
+			$this->data['book'] = $book->find($this->data['data']['book_id']);
 
-		return view('borrow-book/create', $this->data);
+			return view('borrow-book/create', $this->data);
+		});
 	}
 	public function update(int $id)
 	{
@@ -83,9 +92,15 @@ class Borrowbooks extends BaseController
 	}
 	public function delete(int $id)
 	{
-		$request = $this->request;
-		$model = new Borrowbook();
-		$model->where('id', $id)->delete();
-		return redirect()->back();
+		return $this->_admin(function(){
+			$request = $this->request;
+			$model = new Borrowbook();
+			$model->where('id', $id);
+			if($this->user['role'] == 'user'){
+				$model->where('user_id', $this->user);
+			}
+			$model->delete();
+			return redirect()->back();
+		});
 	}
 }

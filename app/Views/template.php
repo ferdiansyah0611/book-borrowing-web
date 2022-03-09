@@ -169,13 +169,10 @@
                   <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
                 </li>
                 <li class="nav-item">
-                  <a href="https://ferdianysyah.web.app" class="nav-link" target="_blank">About Us</a>
+                  <a href="https://ferdianyah.web.app" class="nav-link" target="_blank">About Us</a>
                 </li>
                 <li class="nav-item">
                   <a href="http://ferdiansyah-blog.herokuapp.com/" class="nav-link" target="_blank">Blog</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>
                 </li>
               </ul>
             </div>

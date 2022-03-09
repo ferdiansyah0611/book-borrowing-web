@@ -13,6 +13,13 @@ class EbookController extends BaseController
 	{
 		$this->data['active'] = 'ebook';
 	}
+	public function _admin($run)
+	{
+		if($this->user['role'] == 'user'){
+			return redirect()->back();
+		}
+		return $run();
+	}
 	public function _wrap()
 	{
 		$request = $this->request;
@@ -65,7 +72,9 @@ class EbookController extends BaseController
 	}
 	public function new()
 	{
-		return view('ebook/create', $this->data);
+		return $this->_admin(function(){
+			return view('ebook/create', $this->data);
+		});
 	}
 	public function show(int $id)
 	{
@@ -73,24 +82,30 @@ class EbookController extends BaseController
 	}
 	public function edit(int $id)
 	{
+		return $this->_admin(function(){
+			$this->data['data'] = $model->where('id', $id)->first();
+			return view('ebook/create', $this->data);
+		});
 		$model = new Ebook();
-		$this->data['data'] = $model->where('id', $id)->first();
-		return view('ebook/create', $this->data);
 	}
 	public function update(int $id)
 	{
-		$model = new Ebook();
-		$data = $this->_wrap();
-		$data['updated_at'] = date("Y-m-d H:i:s");
-		$model->update($id, $data);
-		return redirect()->back();
+		return $this->_admin(function(){
+			$model = new Ebook();
+			$data = $this->_wrap();
+			$data['updated_at'] = date("Y-m-d H:i:s");
+			$model->update($id, $data);
+			return redirect()->back();
+		});
 	}
 	public function delete(int $id)
 	{
-		$model = new Ebook();
-		$where = $model->where('id', $id);
-	    unlink(ROOTPATH . 'public' . $where->first()['file']);
-		$where->delete();
-		return redirect()->back();
+		return $this->_admin(function(){
+			$model = new Ebook();
+			$where = $model->where('id', $id);
+		    unlink(ROOTPATH . 'public' . $where->first()['file']);
+			$where->delete();
+			return redirect()->back();
+		});
 	}
 }

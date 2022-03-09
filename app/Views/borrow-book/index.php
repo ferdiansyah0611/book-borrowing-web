@@ -44,7 +44,9 @@ Borrow Book
 							<th scope="col" class="sort" data-sort="budget">Start</th>
 							<th scope="col" class="sort" data-sort="budget">End</th>
 							<th scope="col" class="sort" data-sort="status">Created</th>
-							<th scope="col" class="sort" data-sort="status">Action</th>
+							<?php if ($user['role'] == 'admin'): ?>
+								<th scope="col" class="sort" data-sort="status">Action</th>
+							<?php endif ?>
 						</tr>
 					</thead>
 					<tbody class="list">
@@ -63,15 +65,17 @@ Borrow Book
 								<?= $data->start ?>
 							</td>
 							<td>
-								<span class="<?= $data->end < date('Y-m-d H:i:s') ? 'badge badge-danger': 'badge badge-success' ?>"><?= $data->end ?></span>
+								<span class="<?= $data->end < date('Y-m-d H:i:s') ? 'badge badge-success': 'badge badge-danger' ?>"><?= $data->end ?></span>
 							</td>
 							<td>
 								<?= $data->created_at ?>
 							</td>
-							<td>
-								<a href="<?= base_url('borrow-book/' . $data->id  . '/edit') ?>" class="btn btn-sm btn-primary">Edit</a>
-								<button data-id="<?= $data->id ?>" type="submit" class="btn btn-sm btn-danger deleted">Remove</button>
-							</td>
+							<?php if ($user['role'] == 'admin'): ?>
+								<td>
+									<a href="<?= base_url('borrow-book/' . $data->id  . '/edit') ?>" class="btn btn-sm btn-primary">Edit</a>
+									<button data-id="<?= $data->id ?>" type="submit" class="btn btn-sm btn-danger deleted">Remove</button>
+								</td>
+							<?php endif ?>
 						</tr>
 						<?php endforeach; ?>
 						<?php if (count($list) == 0): ?>

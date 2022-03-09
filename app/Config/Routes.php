@@ -32,7 +32,6 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index', ['filter' => 'authorize']);
 $routes->group('analytics', ['filter' => 'authorize'], function($routes){
     $routes->get('book', 'ChartController::book');
     $routes->get('borrowed', 'ChartController::borrowed');
@@ -42,10 +41,13 @@ $routes->group('auth', function($routes){
     $routes->match(['get', 'post'], 'signup', 'AuthController::register', ['as' => 'register']);
     $routes->get('logout', 'AuthController::logout', ['as' => 'logout', 'filter' => 'authorize']);
 });
-$routes->resource('book', ['controller' => 'Books', 'filter' => 'authorize']);
-$routes->resource('ebook', ['controller' => 'EbookController', 'filter' => 'authorize']);
-$routes->resource('borrow-book', ['controller' => 'Borrowbooks', 'filter' => 'authorize']);
-$routes->resource('user', ['controller' => 'Users', 'filter' => 'admin']);
+$routes->group('', ['filter' => 'authorize'], function($routes){
+    $routes->get('/', 'Home::index');
+    $routes->resource('book', ['controller' => 'Books']);
+    $routes->resource('ebook', ['controller' => 'EbookController']);
+    $routes->resource('borrow-book', ['controller' => 'Borrowbooks']);
+    $routes->resource('user', ['controller' => 'Users', 'filter' => 'admin']);
+});
 
 /*
  * --------------------------------------------------------------------
