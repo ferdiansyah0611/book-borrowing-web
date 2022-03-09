@@ -62,30 +62,31 @@ class AuthController extends BaseController
 			{
 				$this->session->setFlashdata('validation', $this->validator->listErrors());
 				return redirect()->back();
+			}else{
+				$request = $this->request;
+				$user = new User();
+				$find = $user->where('email', $request->getPost('email'))->first();
+				if(!isset($find['id']))
+				{
+					$username = $request->getPost('username');
+					$email = $request->getPost('email');
+					$password = password_hash($request->getPost('password'), PASSWORD_DEFAULT);
+					$insert = [
+						'username' => $username,
+						'email' => $email,
+						'password' => $password,
+						'role' => 'user',
+						'created_at' => date("Y-m-d H:i:s"),
+					];
+					$user->save($insert);
+					$data = $insert;
+					$data['password'] = null;
+					$this->session->setFlashdata('success', 'Successfuly registered. Signin now!');
+					return redirect()->to('/auth/signin');
+				}
+				$this->session->setFlashdata('error', 'User has registered.');
+				return view('auth/register');
 			}
-			$request = $this->request;
-			$user = new User();
-			$find = $user->where('email', $request->getPost('email'))->first();
-			if(!isset($find['id']))
-			{
-				$username = $request->getPost('username');
-				$email = $request->getPost('email');
-				$password = password_hash($request->getPost('password'), PASSWORD_DEFAULT);
-				$insert = [
-					'username' => $username,
-					'email' => $email,
-					'password' => $password,
-					'role' => 'user',
-					'created_at' => date("Y-m-d H:i:s"),
-				];
-				$user->save($insert);
-				$data = $insert;
-				$data['password'] = null;
-				$this->session->setFlashdata('success', 'Successfuly registered. Signin now!');
-				return redirect()->to('/auth/signin');
-			}
-			$this->session->setFlashdata('error', 'User has registered.');
-			return view('auth/register');
 		}
 	}
 	public function logout()

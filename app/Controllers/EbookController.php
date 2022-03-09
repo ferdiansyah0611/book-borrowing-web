@@ -12,6 +12,10 @@ class EbookController extends BaseController
 	public function __construct()
 	{
 		$this->data['active'] = 'ebook';
+		$this->rules = [
+		    'title' => 'required|min_length[3]',
+		    'file' => 'uploaded[file]|max_size[file,20024]|mime_in[file,application/pdf]'
+		];
 	}
 	public function _admin($run)
 	{
@@ -46,11 +50,20 @@ class EbookController extends BaseController
 	}
 	public function create()
 	{
+		if($this->request->getPost('id')){
+			unset($this->rules['file']);
+		}
+
 		$request = $this->request;
 		$model = new Ebook();
 		$data = $this->_wrap();
 		$img = $request->getFile('file');
 		$id = $request->getPost('id');
+		$validate = $this->validate($this->rules);
+		if(!$validate){
+			$this->session->setFlashdata('validation', $this->validator->getErrors());
+			return redirect()->back();
+		}
 		if($img->isValid()){
 	        $path = '/uploads/' . date('Ymd');
 	        $name = $img->getRandomName();
@@ -82,11 +95,12 @@ class EbookController extends BaseController
 	}
 	public function edit(int $id)
 	{
-		return $this->_admin(function(){
-			$this->data['data'] = $model->where('id', $id)->first();
-			return view('ebook/create', $this->data);
-		});
+		if($this->user['role'] == 'user'){
+			return redirect()->back();
+		}
 		$model = new Ebook();
+		$this->data['data'] = $model->where('id', $id)->first();
+		return view('ebook/create', $this->data);
 	}
 	public function update(int $id)
 	{

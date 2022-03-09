@@ -10,6 +10,11 @@ class Users extends BaseController
 	public function __construct()
 	{
 		$this->data['active'] = 'user';
+		$this->rules = [
+		    'username' => 'required|min_length[3]',
+		    'email' => 'required|valid_email|is_unique[users.email]',
+		    'role' => 'required'
+		];
 	}
 	public function _wrap()
 	{
@@ -21,6 +26,14 @@ class Users extends BaseController
 		];
 		if($request->getPost('id')){
 			$data['id'] = $request->getPost('id');
+			$data['updated_at'] = date("Y-m-d H:i:s");
+			$new = $request->getPost('new_password');
+			if($new){
+				$data['password'] = password_hash($new, PASSWORD_DEFAULT);
+			}
+		}else{
+			$data['password'] = password_hash($request->getPost('password'), PASSWORD_DEFAULT);
+			$data['created_at'] = date("Y-m-d H:i:s");
 		}
 		return $data;
 	}
@@ -39,18 +52,16 @@ class Users extends BaseController
 	}
 	public function create()
 	{
-		$request = $this->request;
+		if($this->request->getPost('id')){
+			unset($this->rules['email']);
+		}
+		$validate = $this->validate($this->rules);
+		if(!$validate){
+			$this->session->setFlashdata('validation', $this->validator->getErrors());
+			return redirect()->back();
+		}
 		$user = new User();
 		$data = $this->_wrap();
-		$pw = $request->getPost('password');
-		$id = $request->getPost('id');
-		if($pw){
-			$data['password'] = password_hash($pw, PASSWORD_DEFAULT);
-		}
-		if($id){
-			$data['updated_at'] = date("Y-m-d H:i:s");
-		}
-		$data['created_at'] = date("Y-m-d H:i:s");
 		$user->save($data);
 
 		return redirect()->back();

@@ -15,6 +15,15 @@ Create
 			</div>
 			<div class="card-body">
 				<form action="<?= base_url('user') ?>" method="post">
+					<?php if(session()->getFlashData('validation')): ?>
+						<div class="alert alert-danger" role="alert">
+							<?php foreach ((array) session()->getFlashData('validation') as $key => $value): ?>
+						        <li>
+						          <?= $value ?>
+						        </li>
+						    <?php endforeach; ?>
+						</div>
+					<?php endif; ?>
 					<div class="row">
 						<input type="hidden" name="id" value="<?= isset($data) ? $data['id']: '' ?>">
 						<div class="col-12">
@@ -29,14 +38,21 @@ Create
 							<div class="form-group">
 								<label for="" class="form-control-label">Role</label>
 								<select required name="role" id="" class="form-control form-control-alternative">
+									<option value="">-- SELECT --</option>
 									<option value="admin">Admin</option>
 									<option value="user">User</option>
 								</select>
 							</div>
-							<?php if(!isset($data)): ?>
+							<?php if(!isset($data['id'])): ?>
 							<div class="form-group">
-								<label for="" class="form-control-label">Password</label>
-								<input required type="password" name="password" class="form-control form-control-alternative">
+								<label for="password" class="form-control-label">Password</label>
+								<input required id="password" type="password" name="password" class="form-control form-control-alternative" placeholder="Required">
+							</div>
+							<?php endif ?>
+							<?php if(isset($data['id'])): ?>
+							<div class="form-group">
+								<label for="password" class="form-control-label">Password</label>
+								<input id="password" type="password" name="password" class="form-control form-control-alternative" placeholder="Optional">
 							</div>
 							<?php endif ?>
 						</div>

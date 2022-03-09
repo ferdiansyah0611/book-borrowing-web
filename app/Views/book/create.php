@@ -15,7 +15,7 @@ Create
 			</div>
 			<div class="card-body">
 				<form action="<?= base_url('book') ?>" method="post">
-						<?php if(session()->getFlashData('validation')): ?>
+					<?php if(session()->getFlashData('validation')): ?>
 						<div class="alert alert-danger" role="alert">
 							<?php foreach ((array) session()->getFlashData('validation') as $key => $value): ?>
 						        <li>
@@ -23,7 +23,7 @@ Create
 						        </li>
 						    <?php endforeach; ?>
 						</div>
-						<?php endif; ?>
+					<?php endif; ?>
 					<div class="row">
 						<input type="hidden" name="id" value="<?= isset($data) ? $data['id']: '' ?>">
 						<div class="col-12">

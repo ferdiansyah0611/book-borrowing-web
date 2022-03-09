@@ -11,7 +11,7 @@ Signup to library web
       </div>
       <?php if(session()->getFlashData('error') || session()->getFlashData('validation')): ?>
       <div class="alert alert-danger" role="alert">
-        <?php if(session()->getFlashData('error')): ?>
+        <?php if(session()->getFlashData('error') !== ''): ?>
         <li><?php echo session()->getFlashData('error'); ?></li>
         <?php endif; ?>
         <?php foreach ((array) session()->getFlashData('validation') as $key => $value): ?>

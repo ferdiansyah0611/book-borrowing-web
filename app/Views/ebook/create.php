@@ -15,6 +15,15 @@ Create
 			</div>
 			<div class="card-body">
 				<form action="<?= base_url('ebook') ?>" method="post" enctype="multipart/form-data">
+					<?php if(session()->getFlashData('validation')): ?>
+						<div class="alert alert-danger" role="alert">
+							<?php foreach ((array) session()->getFlashData('validation') as $key => $value): ?>
+						        <li>
+						          <?= $value ?>
+						        </li>
+						    <?php endforeach; ?>
+						</div>
+					<?php endif; ?>
 					<div class="row">
 						<input type="hidden" name="id" value="<?= isset($data) ? $data['id']: '' ?>">
 						<div class="col-12">
@@ -26,7 +35,7 @@ Create
 						<div class="col-12">
 							<div class="form-group">
 								<label for="" class="form-control-label">Upload PDF</label>
-								<input type="file" class="form-control form-control-alternative" name="file">
+								<input accept="application/pdf" type="file" class="form-control form-control-alternative" name="file">
 							</div>
 						</div>
 						<div class="col-12">

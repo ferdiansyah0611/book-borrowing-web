@@ -15,6 +15,15 @@ Create
 			</div>
 			<div class="card-body">
 				<form action="<?= base_url('borrow-book') ?>" method="post">
+					<?php if(session()->getFlashData('validation')): ?>
+						<div class="alert alert-danger" role="alert">
+							<?php foreach ((array) session()->getFlashData('validation') as $key => $value): ?>
+						        <li>
+						          <?= $value ?>
+						        </li>
+						    <?php endforeach; ?>
+						</div>
+					<?php endif; ?>
 					<div class="row">
 						<input type="hidden" name="id" value="<?= isset($data) ? $data['id']: '' ?>">
 						<input type="hidden" name="book_id" value="<?= isset($book) ? $book['id']: '' ?>">

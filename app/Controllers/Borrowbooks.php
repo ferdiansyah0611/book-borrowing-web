@@ -11,6 +11,11 @@ class Borrowbooks extends BaseController
 	public function __construct()
 	{
 		$this->data['active'] = 'borrow-book';
+		$this->rules = [
+		    'book_id' => 'required',
+		    'start' => 'required',
+		    'end' => 'required',
+		];
 	}
 	public function _admin($run)
 	{
@@ -46,6 +51,12 @@ class Borrowbooks extends BaseController
 	}
 	public function create()
 	{
+		$validate = $this->validate($this->rules);
+		if(!$validate){
+			$this->session->setFlashdata('validation', $this->validator->getErrors());
+			return redirect()->back();
+		}
+
 		$request = $this->request;
 		$model = new Borrowbook();
 		$data = $this->_wrap();
