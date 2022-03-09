@@ -1,4 +1,7 @@
 <?= $this->extend('template') ?>
+<?= $this->section('title') ?>
+Borrow Book
+<?= $this->endSection() ?>
 <?= $this->section('header') ?>
 <!-- Header -->
 <div class="header bg-primary pb-6">
@@ -6,15 +9,13 @@
 		<div class="header-body">
 			<div class="row align-items-center py-4">
 				<div class="col-lg-6 col-7">
-					<nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+					<h6 class="h2 text-white d-inline-block mb-0">Borrow Book</h6>
+					<nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
 						<ol class="breadcrumb breadcrumb-links breadcrumb-dark">
 							<li class="breadcrumb-item"><a href="/"><i class="fas fa-home"></i></a></li>
 							<li class="breadcrumb-item active" aria-current="page">borrow-book</li>
 						</ol>
 					</nav>
-				</div>
-				<div class="col-lg-6 col-5 text-right">
-					<a href="#" class="btn btn-sm btn-neutral">Filters</a>
 				</div>
 			</div>
 		</div>
@@ -48,7 +49,7 @@
 					</thead>
 					<tbody class="list">
 						<?php foreach ($list as $key => $data): ?>
-						<tr<?php echo $data->end < date('Y-m-d H:i:s') ? ' class="table-info text-black"': '' ?>>
+						<tr>
 							<th>
 								<?= $data->id ?>
 							</th>
@@ -62,7 +63,7 @@
 								<?= $data->start ?>
 							</td>
 							<td>
-								<?= $data->end ?>
+								<span class="<?= $data->end < date('Y-m-d H:i:s') ? 'badge badge-danger': 'badge badge-success' ?>"><?= $data->end ?></span>
 							</td>
 							<td>
 								<?= $data->created_at ?>
@@ -73,6 +74,11 @@
 							</td>
 						</tr>
 						<?php endforeach; ?>
+						<?php if (count($list) == 0): ?>
+							<tr>
+								<td>no records</td>
+							</tr>
+						<?php endif ?>
 					</tbody>
 				</table>
 			</div>

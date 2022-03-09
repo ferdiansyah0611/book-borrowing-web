@@ -22,6 +22,7 @@ class Home extends BaseController
 		$this->data['count']['borrow'] = $borrow->count();
 		$this->data['count']['user'] = $user->count();
 		$this->data['count']['view'] = $this->view->count();
+		$this->data['list'] = $book->orderBy('created_at', 'desc')->limit(20)->find();
 		return view('home', $this->data);
 	}
 }

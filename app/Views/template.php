@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
     <meta name="author" content="Creative Tim">
-    <title>Argon Dashboard - Free Dashboard for Bootstrap 4</title>
+    <title><?= $this->renderSection('title') ?></title>
     <!-- Favicon -->
     <link rel="icon" href="<?= base_url('argon') ?>/assets/img/brand/favicon.png" type="image/png">
     <!-- Fonts -->
@@ -25,7 +25,8 @@
     <link rel="stylesheet" href="<?= base_url('argon') ?>/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
     <!-- Page plugins -->
     <!-- Argon CSS -->
-    <link rel="stylesheet" href="<?= base_url('argon') ?>/assets/css/argon.css?v=1.2.0" type="text/css">
+    <link rel="stylesheet" href="<?= base_url('argon') ?>/assets/css/argon.min.css?v=1.2.0" type="text/css">
+    <link rel="stylesheet" href="<?= base_url() ?>/app.css" type="text/css">
   </head>
   <body>
     <!-- Sidenav -->
@@ -88,13 +89,13 @@
         <div class="container-fluid">
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Search form -->
-            <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
+            <form action="" class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
               <div class="form-group mb-0">
                 <div class="input-group input-group-alternative input-group-merge">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-search"></i></span>
                   </div>
-                  <input class="form-control" placeholder="Search" type="text">
+                  <input class="form-control" placeholder="Search" type="text" name="search" value="<?= isset($_GET['search']) ? $_GET['search']: '' ?>">
                 </div>
               </div>
               <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
@@ -118,117 +119,6 @@
                   <i class="ni ni-zoom-split-in"></i>
                 </a>
               </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="ni ni-bell-55"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-xl  dropdown-menu-right  py-0 overflow-hidden">
-                  <!-- Dropdown header -->
-                  <div class="px-3 py-3">
-                    <h6 class="text-sm text-muted m-0">You have <strong class="text-primary">13</strong> notifications.</h6>
-                  </div>
-                  <!-- List group -->
-                  <div class="list-group list-group-flush">
-                    <a href="#!" class="list-group-item list-group-item-action">
-                      <div class="row align-items-center">
-                        <div class="col-auto">
-                          <!-- Avatar -->
-                          <img alt="Image placeholder" src="<?= base_url('argon') ?>/assets/img/theme/team-1.jpg" class="avatar rounded-circle">
-                        </div>
-                        <div class="col ml--2">
-                          <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                              <h4 class="mb-0 text-sm"><?= $user['username'] ?></h4>
-                            </div>
-                            <div class="text-right text-muted">
-                              <small>2 hrs ago</small>
-                            </div>
-                          </div>
-                          <p class="text-sm mb-0">Let's meet at Starbucks at 11:30. Wdyt?</p>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#!" class="list-group-item list-group-item-action">
-                      <div class="row align-items-center">
-                        <div class="col-auto">
-                          <!-- Avatar -->
-                          <img alt="Image placeholder" src="<?= base_url('argon') ?>/assets/img/theme/team-2.jpg" class="avatar rounded-circle">
-                        </div>
-                        <div class="col ml--2">
-                          <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                              <h4 class="mb-0 text-sm"><?= $user['username'] ?></h4>
-                            </div>
-                            <div class="text-right text-muted">
-                              <small>3 hrs ago</small>
-                            </div>
-                          </div>
-                          <p class="text-sm mb-0">A new issue has been reported for Argon.</p>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#!" class="list-group-item list-group-item-action">
-                      <div class="row align-items-center">
-                        <div class="col-auto">
-                          <!-- Avatar -->
-                          <img alt="Image placeholder" src="<?= base_url('argon') ?>/assets/img/theme/team-3.jpg" class="avatar rounded-circle">
-                        </div>
-                        <div class="col ml--2">
-                          <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                              <h4 class="mb-0 text-sm"><?= $user['username'] ?></h4>
-                            </div>
-                            <div class="text-right text-muted">
-                              <small>5 hrs ago</small>
-                            </div>
-                          </div>
-                          <p class="text-sm mb-0">Your posts have been liked a lot.</p>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#!" class="list-group-item list-group-item-action">
-                      <div class="row align-items-center">
-                        <div class="col-auto">
-                          <!-- Avatar -->
-                          <img alt="Image placeholder" src="<?= base_url('argon') ?>/assets/img/theme/team-4.jpg" class="avatar rounded-circle">
-                        </div>
-                        <div class="col ml--2">
-                          <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                              <h4 class="mb-0 text-sm"><?= $user['username'] ?></h4>
-                            </div>
-                            <div class="text-right text-muted">
-                              <small>2 hrs ago</small>
-                            </div>
-                          </div>
-                          <p class="text-sm mb-0">Let's meet at Starbucks at 11:30. Wdyt?</p>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#!" class="list-group-item list-group-item-action">
-                      <div class="row align-items-center">
-                        <div class="col-auto">
-                          <!-- Avatar -->
-                          <img alt="Image placeholder" src="<?= base_url('argon') ?>/assets/img/theme/team-5.jpg" class="avatar rounded-circle">
-                        </div>
-                        <div class="col ml--2">
-                          <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                              <h4 class="mb-0 text-sm"><?= $user['username'] ?></h4>
-                            </div>
-                            <div class="text-right text-muted">
-                              <small>3 hrs ago</small>
-                            </div>
-                          </div>
-                          <p class="text-sm mb-0">A new issue has been reported for Argon.</p>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                  <!-- View all -->
-                  <a href="#!" class="dropdown-item text-center text-primary font-weight-bold py-3">View all</a>
-                </div>
-              </li>
             </ul>
             <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
               <li class="nav-item dropdown">
@@ -246,13 +136,9 @@
                   <div class="dropdown-header noti-title">
                     <h6 class="text-overflow m-0">Welcome!</h6>
                   </div>
-                  <a href="/setting" class="dropdown-item">
+                  <a href="#" class="dropdown-item">
                     <i class="ni ni-settings-gear-65"></i>
                     <span>Settings</span>
-                  </a>
-                  <a href="/activity" class="dropdown-item">
-                    <i class="ni ni-calendar-grid-58"></i>
-                    <span>Activity</span>
                   </a>
                   <div class="dropdown-divider"></div>
                   <a href="<?= route_to('logout') ?>" class="dropdown-item">

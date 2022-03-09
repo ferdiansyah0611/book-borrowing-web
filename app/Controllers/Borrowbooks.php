@@ -49,12 +49,11 @@ class Borrowbooks extends BaseController
 	}
 	public function new()
 	{
-		$id = $_GET['id'];
-		if($id)
+		if(isset($_GET['id']))
 		{
+			$id = $_GET['id'];
 			$book = new Book();
 			$find = $book->find($id);
-			// dd($find);
 			$this->data['book'] = $find;
 			return view('borrow-book/create', $this->data);
 		}else{

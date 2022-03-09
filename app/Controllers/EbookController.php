@@ -87,9 +87,10 @@ class EbookController extends BaseController
 	}
 	public function delete(int $id)
 	{
-		$request = $this->request;
 		$model = new Ebook();
-		$model->where('id', $id)->delete();
+		$where = $model->where('id', $id);
+	    unlink(ROOTPATH . 'public' . $where->first()['file']);
+		$where->delete();
 		return redirect()->back();
 	}
 }

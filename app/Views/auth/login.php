@@ -1,4 +1,7 @@
 <?= $this->extend('templates/auth') ?>
+<?= $this->section('title') ?>
+Signin to library web
+<?= $this->endSection() ?>
 <?= $this->section('content') ?>
 <div class="col-lg-5 col-md-7">
   <div class="card bg-secondary border-0 mb-0">
@@ -52,7 +55,7 @@
       <a href="#" class="text-light"><small>Forgot password?</small></a>
     </div>
     <div class="col-6 text-right">
-      <a href="<?= base_url('auth/signup') ?>" class="text-light"><small>Create new account</small></a>
+      <a href="<?= route_to('App\Controllers\AuthController::register') ?>" class="text-light"><small>Create new account</small></a>
     </div>
   </div>
 </div>

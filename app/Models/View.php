@@ -51,11 +51,10 @@ class View extends Model
 	}
 	public function count()
 	{
-		$db = \Config\Database::connect();
 		$date = date_create(date('Y-m-d'));
 		$date->modify('-1 month');
-		$month = $date->format('Y-m-d H:i:s');
-		$data = $db->table($this->table)->where('created_at >=', $month)->countAllResults();
+		$month = $date->format('m');
+		$data = $this->db->table($this->table)->where('MONTH(created_at) >=', $month)->where('MONTH(created_at) <=', date('m'))->countAllResults();
 		return $data;
 	}
 }

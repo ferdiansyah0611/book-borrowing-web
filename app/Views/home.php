@@ -1,4 +1,7 @@
 <?= $this->extend('template') ?>
+<?= $this->section('title') ?>
+Dashboard
+<?= $this->endSection() ?>
 <?= $this->section('header') ?>
 <!-- Header -->
 <div class="header bg-primary pb-6">
@@ -109,39 +112,16 @@
 <?= $this->section('content') ?>
 <div class="mt-4">
 	<div class="row">
-		<div class="col-xl-4 order-xl-2">
-			<div class="card card-profile">
-				<img src="<?= base_url() ?>/argon/assets/img/theme/img-1-1000x600.jpg" alt="Image placeholder" class="card-img-top">
-				<div class="row justify-content-center">
-					<div class="col-lg-3 order-lg-2">
-						<div class="card-profile-image">
-							<a href="#">
-								<img src="<?= base_url() ?>/argon/assets/img/theme/team-4.jpg" class="rounded-circle">
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-				</div>
-				<div class="card-body pt-0">
-					<div class="row">
-						<div class="col">
-							<div class="card-profile-stats d-flex justify-content-center">
-								
-							</div>
-						</div>
-					</div>
-					<div class="text-center">
-						<h5 class="h3"><?= $user['username'] ?></h5>
-						<div class="h5 font-weight-300">
-							<i class="ni business_briefcase-24 mr-2"></i><?= $user['role'] ?> - Fairy Tech
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 		<div class="col-xl-8">
 			<div class="card bg-default">
+				<div class="card-header bg-transparent">
+					<div class="row align-items-center">
+						<div class="col">
+							<h6 class="text-light text-uppercase ls-1 mb-1">Overview</h6>
+							<h5 class="h3 text-white mb-0">Last Book</h5>
+						</div>
+					</div>
+				</div>
 				<div class="card-body">
 					<div class="chart">
 						<canvas id="chart-sales-dark" class="chart-canvas"></canvas>
@@ -149,6 +129,73 @@
 				</div>
 			</div>
 		</div>
+		<div class="col-xl-4">
+			<div class="card">
+				<div class="card-header bg-transparent">
+					<div class="row align-items-center">
+						<div class="col">
+							<h6 class="text-uppercase text-muted ls-1 mb-1">Accumulate</h6>
+							<h5 class="h3 mb-0">Total Borrowed</h5>
+						</div>
+					</div>
+				</div>
+				<div class="card-body">
+					<div class="chart">
+						<canvas id="chart-bars" class="chart-canvas chartjs-render-monitor" style="display: block; width: 278px; height: 350px;" width="278" height="350"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12">
+		<div class="card">
+			<div class="card-header border-0">
+				<h3 class="mb-0">Latest Product</h3>
+			</div>
+			<div class="table-responsive">
+				<table class="table align-items-center table-flush">
+					<thead class="thead-light">
+						<tr>
+							<th scope="col" class="sort">ID</th>
+							<th scope="col" class="sort">Name</th>
+							<th scope="col" class="sort">Name Publisher</th>
+							<th scope="col" class="sort">author</th>
+							<th scope="col" class="sort">Created</th>
+							<?php if ($user['role'] == 'admin'): ?>
+							<th scope="col" class="sort">Action</th>
+							<?php endif ?>
+						</tr>
+					</thead>
+					<tbody class="list">
+						<?php foreach ($list as $key => $data): ?>
+						<tr>
+							<th scope="row">
+								<?= $data['id'] ?>
+							</th>
+							<td>
+								<?= $data['name'] ?>
+							</td>
+							<td>
+								<?= $data['name_publisher'] ?>
+							</td>
+							<td>
+								<?= $data['author'] ?>
+							</td>
+							<td>
+								<?= $data['created_at'] ?>
+							</td>
+							<td>
+								<?php if($user['role'] == 'admin'): ?>
+								<a href="<?= route_to('App\Controllers\ProductController::edit', $data['id']) ?>" class="btn btn-sm btn-primary">Edit</a>
+								<button data-id="<?= $data['id']?>" type="submit" class="btn btn-sm btn-danger deleted">Remove</button>
+								<?php endif; ?>
+							</td>
+						</tr>
+						<?php endforeach; ?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 	</div>
 </div>
 <?= $this->endSection() ?>

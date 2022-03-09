@@ -837,25 +837,33 @@ var BarsChart = (function() {
 
 	// Init chart
 	function initChart($chart) {
-
-		// Create chart
-		var ordersChart = new Chart($chart, {
-			type: 'bar',
-			data: {
-				labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-				datasets: [{
-					label: 'Sales',
-					data: [25, 20, 30, 22, 17, 29]
-				}]
-			}
-		});
-
-		// Save to jQuery object
-		$chart.data('chart', ordersChart);
+		if(location.pathname === '/'){
+	  		$.ajax({
+	  			url: '/analytics/borrowed',
+	  			success(res){
+	  				const month = []
+	  				const value = []
+	  				Object.keys(res.month).forEach(v => {
+	  					month.push(res.month[v])
+	  				})
+	  				Object.keys(res.value).forEach(v => {
+	  					value.push(res.value[v])
+	  				})
+					var ordersChart = new Chart($chart, {
+						type: 'bar',
+						data: {
+							labels: month.reverse(),
+							datasets: [{
+								label: 'Book',
+								data: value.reverse()
+							}]
+						}
+					});
+					$chart.data('chart', ordersChart);
+	  			}
+	  		})
+	  	}
 	}
-
-
-	// Init chart
 	if ($chart.length) {
 		initChart($chart);
 	}
@@ -880,7 +888,7 @@ var SalesChart = (function() {
   function init($chart) {
   	if(location.pathname === '/'){
   		$.ajax({
-  			url: '/chart',
+  			url: '/analytics/book',
   			success(res){
   				const month = []
   				const value = []
