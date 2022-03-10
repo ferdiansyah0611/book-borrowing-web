@@ -62,10 +62,11 @@ class EbookController extends BaseController
 		$validate = $this->validate($this->rules);
 		if(!$validate){
 			$this->session->setFlashdata('validation', $this->validator->getErrors());
+			$this->session->setFlashdata($_POST);
 			return redirect()->back();
 		}
 		if($img->isValid()){
-	        $path = '/uploads/' . date('Ymd');
+	        $path = '/upload/' . date('Ymd');
 	        $name = $img->getRandomName();
 	        if ($img->move(ROOTPATH . 'public' . $path, $name)){
 	            $data['file'] = $path . '/' . $name;
@@ -86,12 +87,15 @@ class EbookController extends BaseController
 	public function new()
 	{
 		return $this->_admin(function(){
+			$data = $this->session->getFlashdata();
+			unset($data['validation']);
+			$this->data['data'] = $data;
 			return view('ebook/create', $this->data);
 		});
 	}
 	public function show(int $id)
 	{
-		return redirect()->back();
+		//
 	}
 	public function edit(int $id)
 	{
@@ -104,22 +108,21 @@ class EbookController extends BaseController
 	}
 	public function update(int $id)
 	{
-		return $this->_admin(function(){
-			$model = new Ebook();
-			$data = $this->_wrap();
-			$data['updated_at'] = date("Y-m-d H:i:s");
-			$model->update($id, $data);
-			return redirect()->back();
-		});
+		//
 	}
 	public function delete(int $id)
 	{
-		return $this->_admin(function(){
-			$model = new Ebook();
-			$where = $model->where('id', $id);
-		    unlink(ROOTPATH . 'public' . $where->first()['file']);
-			$where->delete();
+		if($this->user['role'] == 'user'){
 			return redirect()->back();
-		});
+		}
+		$model = new Ebook();
+		$modelDelete = new Ebook();
+		$where = $model->where('id', $id);
+		$path = ROOTPATH . 'public' . $where->first()['file'];
+		if(file_exists($path)){
+			unlink($path);
+		}
+		$modelDelete->where('id', $id)->delete();
+		return redirect()->back();
 	}
 }

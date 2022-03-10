@@ -25,16 +25,20 @@ Create
 						</div>
 					<?php endif; ?>
 					<div class="row">
-						<input type="hidden" name="id" value="<?= isset($data) ? $data['id']: '' ?>">
-						<div class="col-12">
+						<input type="hidden" name="id" value="<?= isset($data['id']) ? $data['id']: '' ?>">
+						<div class="col-6">
 							<div class="form-group">
 								<label for="" class="form-control-label">Username</label>
-								<input required value="<?= isset($data['username']) ? $data['username']: '' ?>" type="text" class="form-control form-control-alternative" name="username" placeholder="Username">
+								<input autocomplete="off" required value="<?= isset($data['username']) ? $data['username']: '' ?>" type="text" class="form-control form-control-alternative" name="username" placeholder="Username">
 							</div>
+						</div>
+						<div class="col-6">
 							<div class="form-group">
 								<label for="" class="form-control-label">Email</label>
-								<input required value="<?= isset($data['email']) ? $data['email']: '' ?>" type="text" class="form-control form-control-alternative" name="email" placeholder="Email">
+								<input autocomplete="off" required value="<?= isset($data['email']) ? $data['email']: '' ?>" type="text" class="form-control form-control-alternative" name="email" placeholder="Email">
 							</div>
+						</div>
+						<div class="col-12">
 							<div class="form-group">
 								<label for="" class="form-control-label">Role</label>
 								<select required name="role" id="" class="form-control form-control-alternative">
@@ -51,8 +55,8 @@ Create
 							<?php endif ?>
 							<?php if(isset($data['id'])): ?>
 							<div class="form-group">
-								<label for="password" class="form-control-label">Password</label>
-								<input id="password" type="password" name="password" class="form-control form-control-alternative" placeholder="Optional">
+								<label for="password" class="form-control-label">New Password</label>
+								<input id="password" type="password" name="new_password" class="form-control form-control-alternative" placeholder="Optional">
 							</div>
 							<?php endif ?>
 						</div>

@@ -25,7 +25,7 @@ Create
 						</div>
 					<?php endif; ?>
 					<div class="row">
-						<input type="hidden" name="id" value="<?= isset($data) ? $data['id']: '' ?>">
+						<input type="hidden" name="id" value="<?= isset($data['id']) ? $data['id']: '' ?>">
 						<div class="col-12">
 							<div class="form-group">
 								<label for="" class="form-control-label">Title</label>

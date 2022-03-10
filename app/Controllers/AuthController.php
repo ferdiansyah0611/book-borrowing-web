@@ -51,16 +51,18 @@ class AuthController extends BaseController
 	{
 		$method = $this->request->getMethod();
 		if($method == 'get'){
-			if(!isset($this->user['id'])){
-				return view('auth/register');
+			if(isset($this->user['id'])){
+				return redirect()->to('/');
 			}
-			return redirect()->to('/');
+			$data = $this->session->getFlashdata();
+			return view('auth/register', $data);
 		}
 		if($method == 'post'){
 			$validate = $this->validate($this->rules);
 			if(!$validate)
 			{
 				$this->session->setFlashdata('validation', $this->validator->listErrors());
+				$this->session->setFlashdata($_POST);
 				return redirect()->back();
 			}else{
 				$request = $this->request;

@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\User;
 
-class Users extends BaseController
+class UserController extends BaseController
 {
 	public function __construct()
 	{
@@ -53,11 +53,12 @@ class Users extends BaseController
 	public function create()
 	{
 		if($this->request->getPost('id')){
-			unset($this->rules['email']);
+			$this->rules['email'] = 'required|valid_email';
 		}
 		$validate = $this->validate($this->rules);
 		if(!$validate){
 			$this->session->setFlashdata('validation', $this->validator->getErrors());
+			$this->session->setFlashdata($_POST);
 			return redirect()->back();
 		}
 		$user = new User();
@@ -68,6 +69,9 @@ class Users extends BaseController
 	}
 	public function new()
 	{
+		$data = $this->session->getFlashdata();
+		unset($data['validation']);
+		$this->data['data'] = $data;
 		return view('user/create', $this->data);
 	}
 	public function show(int $id)

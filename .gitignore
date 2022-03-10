@@ -3,7 +3,7 @@
 /public/argon/docs
 /public/argon/*.*
 /public/argon/assets/scss
-/public/uploads/*
+/public/upload/*
 #-------------------------
 # Operating Specific Junk Files
 #-------------------------

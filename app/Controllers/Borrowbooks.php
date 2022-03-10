@@ -54,6 +54,7 @@ class Borrowbooks extends BaseController
 		$validate = $this->validate($this->rules);
 		if(!$validate){
 			$this->session->setFlashdata('validation', $this->validator->getErrors());
+			$this->session->setFlashdata($_POST);
 			return redirect()->back();
 		}
 
@@ -70,9 +71,12 @@ class Borrowbooks extends BaseController
 		if(isset($_GET['id']))
 		{
 			$id = $_GET['id'];
+			$data = $this->session->getFlashdata();
 			$book = new Book();
 			$find = $book->find($id);
 			$this->data['book'] = $find;
+			unset($data['validation']);
+			$this->data['data'] = $data;
 			return view('borrow-book/create', $this->data);
 		}else{
 			return redirect()->back();
@@ -84,34 +88,31 @@ class Borrowbooks extends BaseController
 	}
 	public function edit(int $id)
 	{
-		return $this->_admin(function(){
-			$model = new Borrowbook();
-			$book = new Book();
-			$this->data['data'] = $model->where('id', $id)->first();
-			$this->data['book'] = $book->find($this->data['data']['book_id']);
-
-			return view('borrow-book/create', $this->data);
-		});
+		if($this->user['role'] == 'user'){
+			return redirect()->back();
+		}
+		$model = new Borrowbook();
+		$book = new Book();
+		$this->data['data'] = $model->where('id', $id)->first();
+		$this->data['book'] = $book->find($this->data['data']['book_id']);
+		return view('borrow-book/create', $this->data);
 	}
 	public function update(int $id)
 	{
-		$model = new Borrowbook();
-		$data = $this->_wrap();
-		$data['updated_at'] = date("Y-m-d H:i:s");
-		$model->update($id, $data);
-		return redirect()->back();
+		//
 	}
 	public function delete(int $id)
 	{
-		return $this->_admin(function(){
-			$request = $this->request;
-			$model = new Borrowbook();
-			$model->where('id', $id);
-			if($this->user['role'] == 'user'){
-				$model->where('user_id', $this->user);
-			}
-			$model->delete();
+		if($this->user['role'] == 'user'){
 			return redirect()->back();
-		});
+		}
+		$request = $this->request;
+		$model = new Borrowbook();
+		$model->where('id', $id);
+		if($this->user['role'] == 'user'){
+			$model->where('user_id', $this->user);
+		}
+		$model->delete();
+		return redirect()->back();
 	}
 }
