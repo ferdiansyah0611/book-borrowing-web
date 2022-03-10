@@ -22,6 +22,7 @@ Signup to library web
       </div>
       <?php endif; ?>
       <form action="<?= route_to('register') ?>" method="post" role="form">
+        <?= csrf_field() ?>
         <div class="form-group">
           <div class="input-group input-group-merge input-group-alternative">
             <div class="input-group-prepend">

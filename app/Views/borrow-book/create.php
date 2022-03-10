@@ -15,6 +15,7 @@ Create
 			</div>
 			<div class="card-body">
 				<form action="<?= base_url('borrow-book') ?>" method="post">
+					<?= csrf_field() ?>
 					<?php if(session()->getFlashData('validation')): ?>
 						<div class="alert alert-danger" role="alert">
 							<?php foreach ((array) session()->getFlashData('validation') as $key => $value): ?>

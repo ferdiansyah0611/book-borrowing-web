@@ -15,6 +15,7 @@ Create
 			</div>
 			<div class="card-body">
 				<form action="<?= base_url('book') ?>" method="post">
+					<?= csrf_field() ?>
 					<?php if(session()->getFlashData('validation')): ?>
 						<div class="alert alert-danger" role="alert">
 							<?php foreach ((array) session()->getFlashData('validation') as $key => $value): ?>
@@ -29,7 +30,7 @@ Create
 						<div class="col-12">
 							<div class="form-group">
 								<label for="name" class="form-control-label">Name</label>
-								<input id="name" autocomplete="off" value="<?= isset($data['name']) ? $data['name']: '' ?>" type="text" class="form-control form-control-alternative" name="name" placeholder="Name of book" required>
+								<input id="name" autocomplete="off" value="<?= isset($data['name']) ? esc($data['name']): '' ?>" type="text" class="form-control form-control-alternative" name="name" placeholder="Name of book" required>
 							</div>
 							<div class="form-group">
 								<label for="Description" class="form-control-label">Description</label>
@@ -39,19 +40,19 @@ Create
 						<div class="col-6">
 							<div class="form-group">
 								<label for="name_publisher" class="form-control-label">Name Publisher</label>
-								<input id="name_publisher" autocomplete="off" value="<?= isset($data['name_publisher']) ? $data['name_publisher']: '' ?>" type="text" class="form-control form-control-alternative" name="name_publisher" placeholder="Name of publisher" required>
+								<input id="name_publisher" autocomplete="off" value="<?= isset($data['name_publisher']) ? esc($data['name_publisher']): '' ?>" type="text" class="form-control form-control-alternative" name="name_publisher" placeholder="Name of publisher" required>
 							</div>
 						</div>
 						<div class="col-6">
 							<div class="form-group">
 								<label for="year_publisher" class="form-control-label">Year Publisher</label>
-								<input id="year_publisher" autocomplete="off" value="<?= isset($data['year_publisher']) ? $data['year_publisher']: '' ?>" type="number" min="1900" max="2199" step="1" class="form-control form-control-alternative" name="year_publisher" placeholder="Year of publisher" required>
+								<input id="year_publisher" autocomplete="off" value="<?= isset($data['year_publisher']) ? esc($data['year_publisher']): '' ?>" type="number" min="1900" max="2199" step="1" class="form-control form-control-alternative" name="year_publisher" placeholder="Year of publisher" required>
 							</div>
 						</div>
 						<div class="col-12">
 							<div class="form-group">
 								<label for="author" class="form-control-label">Author</label>
-								<input id="author" autocomplete="off" value="<?= isset($data['author']) ? $data['author']: '' ?>" type="year" class="form-control form-control-alternative" name="author" placeholder="Name of author" required>
+								<input id="author" autocomplete="off" value="<?= isset($data['author']) ? esc($data['author']): '' ?>" type="year" class="form-control form-control-alternative" name="author" placeholder="Name of author" required>
 							</div>
 						</div>
 						<div class="col-12">

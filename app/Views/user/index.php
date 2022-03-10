@@ -55,10 +55,10 @@ User
 								<?= $data['id'] ?>
 							</th>
 							<td class="budget">
-								<?= $data['username'] ?>
+								<?= esc($data['username']) ?>
 							</td>
 							<td class="budget">
-								<?= $data['email'] ?>
+								<?= esc($data['email']) ?>
 							</td>
 							<td>
 								<?= $data['created_at'] ?>

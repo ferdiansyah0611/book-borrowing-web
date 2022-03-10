@@ -57,10 +57,10 @@ E-Book
 								<?= $data->id ?>
 							</th>
 							<td class="budget">
-								<?= $data->username ?>
+								<?= esc($data->username) ?>
 							</td>
 							<td class="budget">
-								<?= $data->title ?>
+								<?= esc($data->title) ?>
 							</td>
 							<td>
 								<?= $data->created_at ?>

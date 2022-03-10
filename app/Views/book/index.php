@@ -57,16 +57,16 @@ Book
 								<?= $data['id'] ?>
 							</th>
 							<td>
-								<?= $data['name'] ?>
+								<?= esc($data['name']) ?>
 							</td>
 							<td>
-								<?= $data['author'] ?>
+								<?= esc($data['author']) ?>
 							</td>
 							<td>
 								<?= $data['created_at'] ?>
 							</td>
 							<td>
-								<a href="<?= base_url('borrow-book//new?id=' . $data['id']) ?>" class="btn btn-sm btn-secondary">Borrow</a>
+								<a href="<?= base_url('borrow-book/new?id=' . $data['id']) ?>" class="btn btn-sm btn-secondary">Borrow</a>
 								<?php if($user['role'] == 'admin'): ?>
 								<a href="<?= base_url('book/' . $data['id'] . '/edit') ?>" class="btn btn-sm btn-primary">Edit</a>
 								<button data-id="<?= $data['id']?>" type="submit" class="btn btn-sm btn-danger deleted">Remove</button>

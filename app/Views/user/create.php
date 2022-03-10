@@ -15,6 +15,7 @@ Create
 			</div>
 			<div class="card-body">
 				<form action="<?= base_url('user') ?>" method="post">
+					<?= csrf_field() ?>
 					<?php if(session()->getFlashData('validation')): ?>
 						<div class="alert alert-danger" role="alert">
 							<?php foreach ((array) session()->getFlashData('validation') as $key => $value): ?>
@@ -29,13 +30,13 @@ Create
 						<div class="col-6">
 							<div class="form-group">
 								<label for="" class="form-control-label">Username</label>
-								<input autocomplete="off" required value="<?= isset($data['username']) ? $data['username']: '' ?>" type="text" class="form-control form-control-alternative" name="username" placeholder="Username">
+								<input autocomplete="off" required value="<?= isset($data['username']) ? esc($data['username']): '' ?>" type="text" class="form-control form-control-alternative" name="username" placeholder="Username">
 							</div>
 						</div>
 						<div class="col-6">
 							<div class="form-group">
 								<label for="" class="form-control-label">Email</label>
-								<input autocomplete="off" required value="<?= isset($data['email']) ? $data['email']: '' ?>" type="text" class="form-control form-control-alternative" name="email" placeholder="Email">
+								<input autocomplete="off" required value="<?= isset($data['email']) ? esc($data['email']): '' ?>" type="text" class="form-control form-control-alternative" name="email" placeholder="Email">
 							</div>
 						</div>
 						<div class="col-12">
@@ -74,7 +75,7 @@ Create
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 	const init = () => {
-		var role = "<?= isset($data['role']) ? $data['role']: '' ?>"
+		var role = "<?= isset($data['role']) ? esc($data['role']): '' ?>"
 		$('select[name="role"]').val(role)
 	}
 	init()

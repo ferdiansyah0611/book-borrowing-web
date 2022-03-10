@@ -15,6 +15,7 @@ Create
 			</div>
 			<div class="card-body">
 				<form action="<?= base_url('ebook') ?>" method="post" enctype="multipart/form-data">
+					<?= csrf_field() ?>
 					<?php if(session()->getFlashData('validation')): ?>
 						<div class="alert alert-danger" role="alert">
 							<?php foreach ((array) session()->getFlashData('validation') as $key => $value): ?>
@@ -29,7 +30,7 @@ Create
 						<div class="col-12">
 							<div class="form-group">
 								<label for="" class="form-control-label">Title</label>
-								<input value="<?= isset($data['title']) ? $data['title']: '' ?>" type="text" class="form-control form-control-alternative" name="title" placeholder="Type here">
+								<input value="<?= isset($data['title']) ? esc($data['title']): '' ?>" type="text" class="form-control form-control-alternative" name="title" placeholder="Type here">
 							</div>
 						</div>
 						<div class="col-12">
@@ -47,16 +48,6 @@ Create
 		</div>
 	</div>
 </div>
-<?= $this->endSection() ?>
-<?= $this->section('js') ?>
-<script>
-$(document).ready(() => {
-	const init = () => {
-
-	}
-	init()
-})
-</script>
 <?= $this->endSection() ?>
 <?= $this->section('header') ?>
 <!-- Header -->
