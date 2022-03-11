@@ -65,7 +65,7 @@ Borrow Book
 								<?= esc($data->start) ?>
 							</td>
 							<td>
-								<span class="<?= $data->end < date('Y-m-d H:i:s') ? 'badge badge-success': 'badge badge-danger' ?>"><?= esc($data->end) ?></span>
+								<span class="<?= $data->end < date('Y-m-d H:i:s') ? 'badge badge-danger': 'badge badge-success' ?>"><?= esc($data->end) ?></span>
 							</td>
 							<td>
 								<?= $data->created_at ?>

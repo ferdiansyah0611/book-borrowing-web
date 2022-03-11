@@ -11,7 +11,7 @@ class EbookController extends BaseController
 
 	public function __construct()
 	{
-		$this->data['active'] = 'ebook';
+		$this->data['active'] = 'Ebook';
 		$this->rules = [
 		    'title' => 'required|min_length[3]',
 		    'file' => 'uploaded[file]|max_size[file,20024]|mime_in[file,application/pdf]'

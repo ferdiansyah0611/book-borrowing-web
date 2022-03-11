@@ -33,10 +33,19 @@
     <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
       <div class="scrollbar-inner">
         <!-- Brand -->
-        <div class="sidenav-header  align-items-center">
+        <div class="sidenav-header d-flex align-items-center">
           <a class="navbar-brand" href="javascript:void(0)">
             <img src="<?= base_url('argon') ?>/assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
           </a>
+          <div class="ml-auto">
+            <div class="sidenav-toggler d-none d-xl-block active" data-action="sidenav-unpin" data-target="#sidenav-main">
+              <div class="sidenav-toggler-inner">
+                <i class="sidenav-toggler-line"></i>
+                <i class="sidenav-toggler-line"></i>
+                <i class="sidenav-toggler-line"></i>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="navbar-inner">
           <!-- Collapse -->
@@ -50,34 +59,78 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link<?= $active == 'book' ? ' active': '' ?>" href="<?= base_url('book') ?>">
+                <a class="nav-link collapsed<?= $active == 'Book' ? ' active': '' ?>" href="#navbar-Book" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-Book">
                   <i class="ni ni-books text-primary"></i>
                   <span class="nav-link-text">Book</span>
                 </a>
+                <div class="collapse" id="navbar-Book" style="">
+                  <ul class="nav nav-sm flex-column">
+                    <?php if ($user['role'] == 'admin'): ?>
+                      <li class="nav-item">
+                        <a href="<?= route_to('App\Controllers\BookController::new') ?>" class="nav-link">Create</a>
+                      </li>
+                    <?php endif ?>
+                    <li class="nav-item">
+                      <a href="<?= route_to('App\Controllers\BookController::index') ?>" class="nav-link">Data</a>
+                    </li>
+                  </ul>
+                </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link<?= $active == 'borrow-book' ? ' active': '' ?>" href="<?= base_url('borrow-book') ?>">
+                <a class="nav-link collapsed<?= $active == 'BorrowBook' ? ' active': '' ?>" href="#navbar-BorrowBook" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-BorrowBook">
                   <i class="ni ni-box-2 text-primary"></i>
-                  <span class="nav-link-text">Borrow Book</span>
+                  <span class="nav-link-text">BorrowBook</span>
                 </a>
+                <div class="collapse" id="navbar-BorrowBook" style="">
+                  <ul class="nav nav-sm flex-column">
+                    <li class="nav-item">
+                      <a href="<?= route_to('App\Controllers\Borrowbooks::index') ?>" class="nav-link">Data</a>
+                    </li>
+                  </ul>
+                </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link<?= $active == 'ebook' ? ' active': '' ?>" href="<?= base_url('ebook') ?>">
+                <a class="nav-link collapsed<?= $active == 'Ebook' ? ' active': '' ?>" href="#navbar-Ebook" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-Ebook">
                   <i class="ni ni-collection text-primary"></i>
-                  <span class="nav-link-text">E-Book</span>
+                  <span class="nav-link-text">E-book</span>
                 </a>
+                <div class="collapse" id="navbar-Ebook" style="">
+                  <ul class="nav nav-sm flex-column">
+                    <?php if ($user['role'] == 'admin'): ?>
+                      <li class="nav-item">
+                        <a href="<?= route_to('App\Controllers\EbookController::new') ?>" class="nav-link">Create</a>
+                      </li>
+                    <?php endif ?>
+                    <li class="nav-item">
+                      <a href="<?= route_to('App\Controllers\EbookController::index') ?>" class="nav-link">Data</a>
+                    </li>
+                  </ul>
+                </div>
               </li>
-              <?php if($user['role'] == 'admin'): ?>
-              <li class="nav-item">
-                <a class="nav-link<?= $active == 'user' ? ' active': '' ?>" href="<?= base_url('user') ?>">
-                  <i class="ni ni-single-02 text-primary"></i>
-                  <span class="nav-link-text">User</span>
-                </a>
-              </li>
-              <?php endif; ?>
             </ul>
-            <!-- Divider -->
-            <hr class="my-3">
+            <?php if($user['role'] == 'admin'): ?>
+              <hr class="my-3">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link collapsed<?= $active == 'User' ? ' active': '' ?>" href="#navbar-User" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-User">
+                    <i class="ni ni-single-02 text-primary"></i>
+                    <span class="nav-link-text">User</span>
+                  </a>
+                  <div class="collapse" id="navbar-User" style="">
+                    <ul class="nav nav-sm flex-column">
+                      <?php if ($user['role'] == 'admin'): ?>
+                        <li class="nav-item">
+                          <a href="<?= route_to('App\Controllers\UserController::new') ?>" class="nav-link">Create</a>
+                        </li>
+                      <?php endif ?>
+                      <li class="nav-item">
+                        <a href="<?= route_to('App\Controllers\UserController::index') ?>" class="nav-link">Data</a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            <?php endif; ?>
           </div>
         </div>
       </div>
@@ -166,7 +219,7 @@
             <div class="col-lg-6">
               <ul class="nav nav-footer justify-content-center justify-content-lg-end">
                 <li class="nav-item">
-                  <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
+                  <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Design by Creative Tim</a>
                 </li>
                 <li class="nav-item">
                   <a href="https://ferdianyah.web.app" class="nav-link" target="_blank">About Us</a>

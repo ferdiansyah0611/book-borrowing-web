@@ -3,9 +3,8 @@
 namespace App\Controllers;
 use App\Models\Book;
 use App\Models\Borrowbook;
-use CodeIgniter\RESTful\ResourceController;
 
-class ChartController extends ResourceController
+class ChartController extends BaseController
 {
 	protected $format    = 'json';
 	
@@ -21,7 +20,7 @@ class ChartController extends ResourceController
 			$listmonth[$i] = $month;
 			$value[$month] = $book->where('MONTH(created_at)', $date->format('n'))->countAllResults();
 		}
-		return $this->respond([
+		return json_encode([
 			'month' => $listmonth,
 			'value' => $value
 		]);
@@ -38,7 +37,7 @@ class ChartController extends ResourceController
 			$listmonth[$i] = $month;
 			$value[$month] = $borrow->where('MONTH(created_at)', $date->format('n'))->countAllResults();
 		}
-		return $this->respond([
+		return json_encode([
 			'month' => $listmonth,
 			'value' => $value
 		]);

@@ -5,14 +5,14 @@
 'use strict';
 
 //
-// Sales chart
+// Points chart
 //
 
-var LineChart = (function() {
+var PointsChart = (function() {
 
 	// Variables
 
-	var $chart = $('#chart-line');
+	var $chart = $('#chart-points');
 
 
 	// Methods
@@ -37,7 +37,10 @@ var LineChart = (function() {
 				labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 				datasets: [{
 					label: 'Performance',
-					data: [0, 20, 10, 30, 15, 40, 20, 60, 60]
+					data: [10, 18, 28, 23, 28, 40, 36, 46, 52],
+					pointRadius: 10,
+					pointHoverRadius: 15,
+					showLine: false
 				}]
 			}
 		});

@@ -126,7 +126,7 @@
         <div class="col-xl-6">
           <ul class="nav nav-footer justify-content-center justify-content-xl-end">
             <li class="nav-item">
-              <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
+              <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Design by Creative Tim</a>
             </li>
             <li class="nav-item">
               <a href="https://ferdianyah.web.app" class="nav-link" target="_blank">About Us</a>

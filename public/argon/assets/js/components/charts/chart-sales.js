@@ -8,11 +8,11 @@
 // Sales chart
 //
 
-var LineChart = (function() {
+var SalesChart = (function() {
 
 	// Variables
 
-	var $chart = $('#chart-line');
+	var $chart = $('#chart-sales');
 
 
 	// Methods

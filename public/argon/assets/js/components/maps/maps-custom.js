@@ -2,7 +2,7 @@
 // Google maps
 //
 
-var $map = $('#map-default'),
+var $map = $('#map-custom'),
     map,
     lat,
     lng,
@@ -10,7 +10,7 @@ var $map = $('#map-default'),
 
 function initMap() {
 
-    map = document.getElementById('map-default');
+    map = document.getElementById('map-custom');
     lat = map.getAttribute('data-lat');
     lng = map.getAttribute('data-lng');
 
@@ -20,6 +20,7 @@ function initMap() {
         scrollwheel: false,
         center: myLatlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
+        styles: [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":color},{"visibility":"on"}]}]
     }
 
     map = new google.maps.Map(map, mapOptions);

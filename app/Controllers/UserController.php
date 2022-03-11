@@ -9,7 +9,7 @@ class UserController extends BaseController
 {
 	public function __construct()
 	{
-		$this->data['active'] = 'user';
+		$this->data['active'] = 'User';
 		$this->rules = [
 		    'username' => 'required|min_length[3]',
 		    'email' => 'required|valid_email|is_unique[users.email]',

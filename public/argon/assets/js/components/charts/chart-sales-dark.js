@@ -8,11 +8,11 @@
 // Sales chart
 //
 
-var LineChart = (function() {
+var SalesChart = (function() {
 
 	// Variables
 
-	var $chart = $('#chart-line');
+	var $chart = $('#chart-sales-dark');
 
 
 	// Methods
@@ -24,8 +24,8 @@ var LineChart = (function() {
 				scales: {
 					yAxes: [{
 						gridLines: {
-							color: Charts.colors.gray[200],
-							zeroLineColor: Charts.colors.gray[200]
+							color: Charts.colors.gray[700],
+							zeroLineColor: Charts.colors.gray[700]
 						},
 						ticks: {
 

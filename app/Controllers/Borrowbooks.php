@@ -10,7 +10,7 @@ class Borrowbooks extends BaseController
 {
 	public function __construct()
 	{
-		$this->data['active'] = 'borrow-book';
+		$this->data['active'] = 'BorrowBook';
 		$this->rules = [
 		    'book_id' => 'required',
 		    'start' => 'required',

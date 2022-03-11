@@ -9,7 +9,7 @@ class BookController extends BaseController
 {
 	public function __construct()
 	{
-		$this->data['active'] = 'book';
+		$this->data['active'] = 'Book';
 		$this->rules = [
 		    'name' => 'required|min_length[3]',
 		    'name_publisher' => 'required|min_length[3]',
