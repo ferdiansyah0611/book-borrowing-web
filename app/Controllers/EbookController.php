@@ -72,7 +72,10 @@ class EbookController extends BaseController
 	            $data['file'] = $path . '/' . $name;
 	            if($id){
 	            	$find = $model->where('id', $id)->first();
-	            	unlink(ROOTPATH . 'public' . $find['file']);
+	            	$pathfile = ROOTPATH . 'public' . $find['file'];
+	            	if(file_exists($pathfile)){
+	            		unlink($pathfile);
+	            	}
 	            	$data['updated_at'] = date("Y-m-d H:i:s");
 	            }
 	        }else{
