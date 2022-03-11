@@ -35,7 +35,7 @@
         <!-- Brand -->
         <div class="sidenav-header d-flex align-items-center">
           <a class="navbar-brand" href="javascript:void(0)">
-            <img src="<?= base_url('argon') ?>/assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
+            <img src="<?= base_url() ?>/logo-blue.png" class="navbar-brand-img" alt="...">
           </a>
           <div class="ml-auto">
             <div class="sidenav-toggler d-none d-xl-block active" data-action="sidenav-unpin" data-target="#sidenav-main">
