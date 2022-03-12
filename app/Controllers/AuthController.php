@@ -21,7 +21,8 @@ class AuthController extends BaseController
 		$method = $this->request->getMethod();
 		if($method == 'get'){
 			if(!isset($this->user['id'])){
-				return view('auth/login');
+				$data = $this->session->getFlashdata();
+				return view('auth/login', $data);
 			}
 			return redirect()->to('/');
 		}
@@ -32,6 +33,7 @@ class AuthController extends BaseController
 			if(!$validate)
 			{
 				$this->session->setFlashdata('validation', $this->validator->getErrors());
+				$this->session->setFlashdata($_POST);
 				return redirect()->back();
 			}
 			$request = $this->request;
@@ -44,7 +46,8 @@ class AuthController extends BaseController
 				return redirect()->to('/');
 			}
 			$this->session->setFlashdata('error', 'Password is wrong.');
-			return view('auth/login');
+			$this->session->setFlashdata($_POST);
+			return redirect()->back();
 		}
 	}
 	public function register()

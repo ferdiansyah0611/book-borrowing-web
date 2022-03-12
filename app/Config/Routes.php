@@ -43,6 +43,7 @@ $routes->group('auth', function($routes){
 });
 $routes->group('', ['filter' => 'authorize'], function($routes){
     $routes->get('/', 'Home::index');
+    $routes->match(['get', 'post'], '/profile', 'UserController::profile');
     $routes->resource('book', ['controller' => 'BookController', 'except' => 'show,update']);
     $routes->resource('ebook', ['controller' => 'EbookController', 'except' => 'show,update']);
     $routes->resource('borrow-book', ['controller' => 'Borrowbooks', 'except' => 'show,update']);

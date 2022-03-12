@@ -15,6 +15,7 @@ class UserController extends BaseController
 		    'email' => 'required|valid_email|is_unique[users.email]',
 		    'role' => 'required'
 		];
+		$this->model = new User();
 	}
 	public function _wrap()
 	{
@@ -76,7 +77,7 @@ class UserController extends BaseController
 	}
 	public function show(int $id)
 	{
-		return view('user/show', $this->data);
+		//
 	}
 	public function edit(int $id)
 	{
@@ -86,11 +87,7 @@ class UserController extends BaseController
 	}
 	public function update(int $id)
 	{
-		$user = new user();
-		$data = $this->_wrap();
-		$data['updated_at'] = date("Y-m-d H:i:s");
-		$user->update($id, $data);
-		return redirect()->back();
+		//
 	}
 	public function delete(int $id)
 	{
@@ -98,5 +95,59 @@ class UserController extends BaseController
 		$user = new user();
 		$user->where('id', $id)->delete();
 		return redirect()->back();
+	}
+	public function profile()
+	{
+		$request = $this->request;
+		$method = $request->getMethod();
+		$this->data['data'] = $this->model->where('id', $this->user['id'])->first();
+
+		if ($method == 'post') {
+			$data = $this->_wrap();
+			unset($data['password']);
+
+			$data['id'] = $this->user['id'];
+			$data['role'] = $this->user['role'];
+			$data['email'] = $this->user['email'];
+			$old_password = $request->getPost('old_password');
+			$new_password = $request->getPost('new_password');
+
+			unset($this->rules['email']);
+			unset($this->rules['password']);
+			unset($this->rules['role']);
+
+			if($old_password){
+				$this->rules['old_password'] = 'required|min_length[8]|string';
+				$this->rules['new_password'] = 'required|min_length[8]|string';
+			}
+			$validate = $this->validate($this->rules);
+
+			$mail = $this->data['data'];
+			if(!$validate){
+				$this->session->setFlashdata('validation', $this->validator->getErrors());
+				if(!$data['id']){
+					$this->session->setFlashdata($_POST);
+				}
+				return redirect()->back();
+			}
+
+			if ($old_password && $new_password) {
+				if (password_verify($old_password, $mail['password'])) {
+					$data['password'] = password_hash($new_password, PASSWORD_DEFAULT);
+				}
+			}
+
+			$data['updated_at'] = date("Y-m-d H:i:s");
+			$this->model->save($data);
+			$user = new User();
+			$user = $user->where('email', $this->user['email'])->first();
+			unset($user['password']);
+			$this->session->set($user);
+			return redirect()->back();
+		}
+		if ($method == 'get') {
+			$this->data['active'] = 'Profile';
+			return view('profile', $this->data);
+		}
 	}
 }

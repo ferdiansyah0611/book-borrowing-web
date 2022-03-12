@@ -193,6 +193,10 @@
                     <i class="ni ni-settings-gear-65"></i>
                     <span>Settings</span>
                   </a>
+                  <a href="<?= route_to('App\Controllers\UserController::profile') ?>" class="dropdown-item">
+                    <i class="ni ni-circle-08"></i>
+                    <span>Profile</span>
+                  </a>
                   <div class="dropdown-divider"></div>
                   <a href="<?= route_to('logout') ?>" class="dropdown-item">
                     <i class="ni ni-user-run"></i>
