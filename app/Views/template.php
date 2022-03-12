@@ -79,7 +79,7 @@
               <li class="nav-item">
                 <a class="nav-link collapsed<?= $active == 'BorrowBook' ? ' active': '' ?>" href="#navbar-BorrowBook" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-BorrowBook">
                   <i class="ni ni-box-2 text-primary"></i>
-                  <span class="nav-link-text">BorrowBook</span>
+                  <span class="nav-link-text">Borrow Book</span>
                 </a>
                 <div class="collapse" id="navbar-BorrowBook" style="">
                   <ul class="nav nav-sm flex-column">
