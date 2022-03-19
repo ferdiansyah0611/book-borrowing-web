@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\Borrowbook;
 use App\Models\Book;
+use \Hermawan\DataTables\DataTable;
 
 class Borrowbooks extends BaseController
 {
@@ -16,6 +17,19 @@ class Borrowbooks extends BaseController
 		    'start' => 'required',
 		    'end' => 'required',
 		];
+	}
+	public function json()
+	{
+		$db = db_connect();
+    	$builder = $db->table('borrow_books')
+    		->select('borrow_books.id, borrow_books.start, borrow_books.end, borrow_books.created_at, users.username, books.name')
+    		->join('users', 'users.id = borrow_books.user_id')
+    		->join('books', 'books.id = borrow_books.book_id');
+    	if($this->user['role'] == 'user')
+		{
+			$builder->where('borrow_books.user_id', $this->user['id']);
+		}
+    	return DataTable::of($builder)->toJson();
 	}
 	public function _admin($run)
 	{

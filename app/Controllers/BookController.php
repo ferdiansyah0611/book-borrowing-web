@@ -4,9 +4,17 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\Book;
+use \Hermawan\DataTables\DataTable;
 
 class BookController extends BaseController
 {
+	public function json()
+	{
+		$db = db_connect();
+    	$builder = $db->table('books')
+    		->select('id, name, name_publisher, year_publisher, author, description');
+    	return DataTable::of($builder)->toJson();
+	}
 	public function __construct()
 	{
 		$this->data['active'] = 'Book';
@@ -43,16 +51,6 @@ class BookController extends BaseController
 	}
 	public function index()
 	{
-		$pager = \Config\Services::pager();
-		$book = new Book();
-		if(isset($_GET['search'])){
-			$book->like('name', $_GET['search']);
-			$book->orLike('author', $_GET['search']);
-			$book->orLike('name_publisher', $_GET['search']);
-		}
-		$this->data['list'] = $book->paginate(10);
-		$this->data['pager'] = $book->pager;
-
 		return view('book/index', $this->data);
 	}
 	public function create()

@@ -31,66 +31,61 @@ E-Book
 <div class="row mt-1">
 	<div class="col">
 		<div class="card">
-			<div class="card-header border-0">
-				<h3 class="mb-0">Ebook</h3>
-			</div>
-			<div class="card-header border-0">
-				<form action="">
-					<input type="search" value="<?=  isset($_GET['search']) ? $_GET['search']: '' ?>" class="form-control form-control-alternative" placeholder="Search here..." name="search">
-				</form>
-			</div>
-			<div class="table-responsive">
-				<table class="table align-items-center table-flush">
+			<div class="card-header">
+              	<h3 class="mb-0">Data</h3>
+            </div>
+			<div class="table-responsive py-4">
+				<table class="table table-flush" id="table">
 					<thead class="thead-light">
 						<tr>
 							<th scope="col" class="sort" data-sort="name">ID</th>
 							<th scope="col" class="sort" data-sort="user">Added by</th>
 							<th scope="col" class="sort" data-sort="title">title</th>
-							<th scope="col" class="sort" data-sort="status">Created</th>
-							<th scope="col" class="sort" data-sort="status">Action</th>
+							<th scope="col" class="sort" data-sort="created_at">Created</th>
+							<th>Action</th>
 						</tr>
 					</thead>
-					<tbody class="list">
-						<?php foreach ($list as $key => $data): ?>
-						<tr>
-							<th scope="row">
-								<?= $data->id ?>
-							</th>
-							<td class="budget">
-								<?= esc($data->username) ?>
-							</td>
-							<td class="budget">
-								<?= esc($data->title) ?>
-							</td>
-							<td>
-								<?= $data->created_at ?>
-							</td>
-							<td>
-								<a target="_blank" href="<?= base_url($data->file) ?>" class="btn btn-sm btn-secondary">View</a>
-								<?php if($user['role'] == 'admin'): ?>
-								<a href="<?= base_url('ebook/' . $data->id  . '/edit') ?>" class="btn btn-sm btn-primary">Edit</a>
-								<button data-id="<?= $data->id ?>" type="submit" class="btn btn-sm btn-danger deleted">Remove</button>
-								<?php endif; ?>
-							</td>
-						</tr>
-						<?php endforeach; ?>
-						<?php if (count($list) == 0): ?>
-							<tr>
-								<td>no records</td>
-							</tr>
-						<?php endif ?>
-					</tbody>
 				</table>
-			</div>
-			<!-- Card footer -->
-			<div class="card-footer py-4">
-				<?= $pager->links() ?>
 			</div>
 		</div>
 	</div>
 </div>
+<?= $this->endSection() ?>
+<?= $this->section('js') ?>
+<?= $this->include('component/datatable.php') ?>
 <script>
-	document.addEventListener('DOMContentLoaded', () => {
+$(document).ready(() => {
+	const render = (key) => ( data, type, row, meta ) => row[key]
+	let table = $('#table').DataTable({
+	  	processing: true,
+	  	serverSide: true,
+	  	ajax: {
+	    	url: '/ebook/json'
+	  	},
+	  	columns: [
+	  		{data: 'id', render: render(0)},
+			{data: 'user', render: render(1)},
+			{data: 'title', render: render(2)},
+			{data: 'created_at', render: render(3)},
+			{data: "action", render : function ( data, type, row, meta ) {
+		  		var value = `<a target="_blank" href="<?= base_url() ?>${row[4]}" class="btn btn-sm btn-secondary">View</a>`;
+		  		var isAdmin = '<?= $user['role'] == 'admin' ?>';
+				if (isAdmin) {
+					value += `<a href="<?= base_url('ebook') ?>/${row[0]}/edit" class="btn btn-sm btn-primary">Edit</a>`
+					value += `<button data-id="${row[0]}" type="submit" class="btn btn-sm btn-danger deleted">Remove</button>`
+				}
+				return value
+          	}},
+	  	],
+     	columnDefs: [
+			{
+        		targets: [4],
+        		orderable: false,
+     			searchable: false
+     		}
+     	]
+	});
+	$("#table").on("draw.dt", function () {
 		const deleted = () => {
 			$('button.deleted').click(function(e){
 				var id = $(this).data('id')
@@ -98,11 +93,12 @@ E-Book
 				$.ajax({
 					url: url,
 					method: 'DELETE',
-					success: () => location.reload(true)
+					success: () => table.ajax.reload()
 				})
 			})
 		}
 		deleted()
 	})
+})
 </script>
 <?= $this->endSection() ?>

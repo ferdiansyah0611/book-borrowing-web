@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use \Hermawan\DataTables\DataTable;
 
 class User extends Model
 {
@@ -48,5 +49,10 @@ class User extends Model
 		$month = $date->format('m');
 		$data = $this->db->table($this->table)->where('MONTH(created_at) >=', $month)->where('MONTH(created_at) <=', date('m'))->countAllResults();
 		return $data;
+	}
+	public function datatable()
+	{
+		$builder = $this->db->table('users')->select('id, username, email, created_at');
+    	return DataTable::of($builder)->toJson(); 
 	}
 }

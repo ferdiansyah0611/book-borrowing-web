@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\Ebook;
+use \Hermawan\DataTables\DataTable;
 
 class EbookController extends BaseController
 {
@@ -16,6 +17,14 @@ class EbookController extends BaseController
 		    'title' => 'required|min_length[3]',
 		    'file' => 'uploaded[file]|max_size[file,20024]|mime_in[file,application/pdf]'
 		];
+	}
+	public function json()
+	{
+		$db = db_connect();
+    	$builder = $db->table('ebooks')
+    		->select('ebooks.id, users.username, ebooks.title, ebooks.created_at, ebooks.file')
+    		->join('users', 'ebooks.user_id = users.id');
+    	return DataTable::of($builder)->toJson();
 	}
 	public function _admin($run)
 	{
@@ -38,14 +47,6 @@ class EbookController extends BaseController
 	}
 	public function index()
 	{
-		$pager = \Config\Services::pager();
-		$model = new Ebook();
-		
-		$data = $model->user($this->data['user']);
-		$pager->makeLinks($data[3], $data[2], $data[1]);
-		$this->data['list'] = $data[0];
-		$this->data['pager'] = $pager;
-
 		return view('ebook/index', $this->data);
 	}
 	public function create()

@@ -29,68 +29,65 @@ Book
 <?= $this->endSection() ?>
 <?= $this->section('content') ?>
 <div class="row mt-1">
-	<div class="col">
+	<div class="col-12">
 		<div class="card">
-			<div class="card-header border-0">
-				<h3 class="mb-0">Book</h3>
-			</div>
-			<div class="card-header border-0">
-				<form action="">
-					<input type="search" value="<?=  isset($_GET['search']) ? $_GET['search']: '' ?>" class="form-control form-control-alternative" placeholder="Search here..." name="search">
-				</form>
-			</div>
-			<div class="table-responsive">
-				<table class="table align-items-center table-flush">
-					<thead class="thead-light">
-						<tr>
-							<th scope="col" class="sort">ID</th>
-							<th scope="col" class="sort">Name</th>
-							<th scope="col" class="sort">Author</th>
-							<th scope="col" class="sort">Created</th>
-							<th scope="col" class="sort">Action</th>
-						</tr>
-					</thead>
-					<tbody class="list">
-						<?php foreach ($list as $key => $data): ?>
-						<tr>
-							<th scope="row">
-								<?= $data['id'] ?>
-							</th>
-							<td>
-								<?= esc($data['name']) ?>
-							</td>
-							<td>
-								<?= esc($data['author']) ?>
-							</td>
-							<td>
-								<?= $data['created_at'] ?>
-							</td>
-							<td>
-								<a href="<?= base_url('borrow-book/new?id=' . $data['id']) ?>" class="btn btn-sm btn-secondary">Borrow</a>
-								<?php if($user['role'] == 'admin'): ?>
-								<a href="<?= base_url('book/' . $data['id'] . '/edit') ?>" class="btn btn-sm btn-primary">Edit</a>
-								<button data-id="<?= $data['id']?>" type="submit" class="btn btn-sm btn-danger deleted">Remove</button>
-								<?php endif; ?>
-							</td>
-						</tr>
-						<?php endforeach; ?>
-						<?php if (count($list) == 0): ?>
-							<tr>
-								<td>no records</td>
-							</tr>
-						<?php endif ?>
-					</tbody>
-				</table>
-			</div>
-			<!-- Card footer -->
-			<div class="card-footer py-4">
-				<?= $pager->links() ?>
-			</div>
+            <div class="card-header">
+              	<h3 class="mb-0">Data</h3>
+            </div>
+            <div class="table-responsive py-4">
+             	<table class="table table-flush" id="table">
+              		<thead class="thead-light">
+                  		<tr>
+                    		<th class="sort" scope="col" data-sort="id">ID</th>
+                    		<th class="sort" scope="col" data-sort="name">Name</th>
+                    		<th class="sort" scope="col" data-sort="name_publisher">Name Publisher</th>
+                    		<th class="sort" scope="col" data-sort="year_publisher">Year Publisher</th>
+                    		<th class="sort" scope="col" data-sort="author">Author</th>
+                    		<th>Action</th>
+                 		</tr>
+                	</thead>
+            	</table>
+          	</div>
 		</div>
 	</div>
 </div>
+<?= $this->endSection() ?>
+<?= $this->section('js') ?>
+<?= $this->include('component/datatable.php') ?>
 <script>
-	document.addEventListener('DOMContentLoaded', () => {
+$(document).ready(() => {
+	const render = (key) => ( data, type, row, meta ) => row[key]
+	let table = $('#table').DataTable({
+	  	processing: true,
+	  	serverSide: true,
+	  	ajax: {
+	    	url: '/book/json'
+	  	},
+	  	columns: [
+			{data: 'id', render: render(0)},
+			{data: 'name', render: render(1)},
+			{data: 'name_publisher', render: render(2)},
+			{data: 'year_publisher', render: render(3)},
+			{data: 'author', render: render(4)},
+			{data: "action", render : function ( data, type, row, meta ) {
+		  		var value = `<a href="<?= base_url('borrow-book/new') ?>?id=${row[0]}" class="btn btn-sm btn-secondary">Borrow</a>`;
+		  		var isAdmin = '<?= $user['role'] == 'admin' ?>';
+				if (isAdmin) {
+					value += `<a href="<?= base_url('book') ?>/${row[0]}/edit" class="btn btn-sm btn-primary">Edit</a>`
+					value += `<button data-id="${row[0]}" type="submit" class="btn btn-sm btn-danger deleted">Remove</button>`
+				}
+				return value
+          	}},
+	  	],
+		columnDefs: [
+			{
+        		targets: [4],
+        		orderable: false,
+     			searchable: false
+     		}
+     	]
+	});
+	$("#table").on("draw.dt", function () {
 		const deleted = () => {
 			$('button.deleted').click(function(e){
 				var id = $(this).data('id')
@@ -98,11 +95,12 @@ Book
 				$.ajax({
 					url: url,
 					method: 'DELETE',
-					success: () => location.reload(true)
+					success: () => table.ajax.reload()
 				})
 			})
 		}
 		deleted()
 	})
+})
 </script>
 <?= $this->endSection() ?>

@@ -17,6 +17,10 @@ class UserController extends BaseController
 		];
 		$this->model = new User();
 	}
+	public function json()
+	{
+    	return $this->model->datatable();
+	}
 	public function _wrap()
 	{
 		$request = $this->request;

@@ -48,6 +48,11 @@ $routes->group('', ['filter' => 'authorize'], function($routes){
     $routes->resource('ebook', ['controller' => 'EbookController', 'except' => 'show,update']);
     $routes->resource('borrow-book', ['controller' => 'Borrowbooks', 'except' => 'show,update']);
     $routes->resource('user', ['controller' => 'UserController', 'filter' => 'admin', 'except' => 'show,update']);
+    $routes->get('book/json', 'BookController::json');
+    $routes->get('ebook/json', 'EbookController::json');
+    $routes->get('borrow-book/json', 'Borrowbooks::json');
+    $routes->get('ebook/json', 'EbookController::json');
+    $routes->get('user/json', 'UserController::json');
 });
 
 /*

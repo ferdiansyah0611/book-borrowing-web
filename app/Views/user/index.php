@@ -29,63 +29,58 @@ User
 <div class="row mt-1">
 	<div class="col">
 		<div class="card">
-			<div class="card-header border-0">
-				<h3 class="mb-0">user</h3>
-			</div>
-			<div class="card-header border-0">
-				<form action="">
-					<input type="search" value="<?=  isset($_GET['search']) ? $_GET['search']: '' ?>" class="form-control form-control-alternative" placeholder="Search here..." name="search">
-				</form>
-			</div>
-			<div class="table-responsive">
-				<table class="table align-items-center table-flush">
+			<div class="card-header">
+              	<h3 class="mb-0">Data</h3>
+            </div>
+			<div class="table-responsive py-4">
+				<table id="table" class="table align-items-center table-flush">
 					<thead class="thead-light">
 						<tr>
 							<th scope="col" class="sort" data-sort="name">ID</th>
-							<th scope="col" class="sort" data-sort="budget">Name</th>
-							<th scope="col" class="sort" data-sort="budget">Email</th>
-							<th scope="col" class="sort" data-sort="status">Created</th>
-							<th scope="col" class="sort" data-sort="status">Action</th>
+							<th scope="col" class="sort" data-sort="username">Name</th>
+							<th scope="col" class="sort" data-sort="email">Email</th>
+							<th scope="col" class="sort" data-sort="created_at">Created</th>
+							<th>Action</th>
 						</tr>
 					</thead>
-					<tbody class="list">
-						<?php foreach ($list as $key => $data): ?>
-						<tr>
-							<th scope="row">
-								<?= $data['id'] ?>
-							</th>
-							<td class="budget">
-								<?= esc($data['username']) ?>
-							</td>
-							<td class="budget">
-								<?= esc($data['email']) ?>
-							</td>
-							<td>
-								<?= $data['created_at'] ?>
-							</td>
-							<td>
-								<a href="<?= base_url('user/' . $data['id'] . '/edit') ?>" class="btn btn-sm btn-primary">Edit</a>
-								<button data-id="<?= $data['id']?>" type="submit" class="btn btn-sm btn-danger deleted">Remove</button>
-							</td>
-						</tr>
-						<?php endforeach; ?>
-						<?php if (count($list) == 0): ?>
-							<tr>
-								<td>no records</td>
-							</tr>
-						<?php endif ?>
-					</tbody>
 				</table>
-			</div>
-			<!-- Card footer -->
-			<div class="card-footer py-4">
-				<?= $pager->links() ?>
 			</div>
 		</div>
 	</div>
 </div>
+<?= $this->endSection() ?>
+<?= $this->section('js') ?>
+<?= $this->include('component/datatable.php') ?>
 <script>
-	document.addEventListener('DOMContentLoaded', () => {
+$(document).ready(() => {
+	const render = (key) => ( data, type, row, meta ) => row[key]
+	let table = $('#table').DataTable({
+	  	processing: true,
+	  	serverSide: true,
+	  	ajax: {
+	    	url: '/user/json'
+	  	},
+	  	columns: [
+	  		{data: 'id', render: render(0)},
+			{data: 'username', render: render(1)},
+			{data: 'email', render: render(2)},
+			{data: 'created_at', render: render(3)},
+			{data: "action", render: function ( data, type, row, meta ) {
+		  		var value = '';
+				value += `<a href="<?= base_url('user') ?>/${row[0]}/edit" class="btn btn-sm btn-primary">Edit</a>`
+				value += `<button data-id="${row[0]}" type="submit" class="btn btn-sm btn-danger deleted">Remove</button>`
+				return value
+          	}},
+	  	],
+     	columnDefs: [
+			{
+        		targets: [4],
+        		orderable: false,
+     			searchable: false
+     		}
+     	]
+	});
+	$("#table").on("draw.dt", function () {
 		const deleted = () => {
 			$('button.deleted').click(function(e){
 				var id = $(this).data('id')
@@ -93,11 +88,12 @@ User
 				$.ajax({
 					url: url,
 					method: 'DELETE',
-					success: () => location.reload(true)
+					success: () => table.ajax.reload()
 				})
 			})
 		}
 		deleted()
 	})
+})
 </script>
 <?= $this->endSection() ?>

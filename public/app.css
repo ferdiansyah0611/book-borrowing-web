@@ -1,0 +1,9 @@
+.pagination .previous a, .pagination .next a{
+	border-radius: 0% !important;
+    width: auto;
+    padding: 0px 5px;
+    cursor: pointer;
+}
+.dataTables_paginate ul{
+    justify-content: end;
+}
