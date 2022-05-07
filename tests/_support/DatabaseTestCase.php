@@ -15,7 +15,13 @@ class DatabaseTestCase extends \CodeIgniter\Test\CIDatabaseTestCase
 	 *
 	 * @var string|array
 	 */
-	protected $seed = 'Tests\Support\Database\Seeds\ExampleSeeder';
+	protected $seed = [
+		'Tests\Support\Database\Seeds\ExampleSeeder',
+		'Tests\Support\Database\Seeds\AuthSeed',
+		'Tests\Support\Database\Seeds\BookSeed',
+		'Tests\Support\Database\Seeds\BorrowbookSeed',
+		'Tests\Support\Database\Seeds\UserSeed',
+	];
 
 	/**
 	 * The path to the seeds directory.

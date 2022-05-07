@@ -6,7 +6,7 @@
 	"license": "MIT",
 	"require": {
 		"php": "^7.2 || ^8.0",
-		"codeigniter4/framework": "^4",
+		"codeigniter4/framework": "^4.1",
 		"hermawan/codeigniter4-datatables": "^0.5.4"
 	},
 	"require-dev": {
@@ -32,7 +32,8 @@
 		}
 	},
 	"scripts": {
-		"test": "phpunit"
+		"test": "phpunit",
+		"reset": "php spark migrate && php spark db:seed Test"
 	},
 	"support": {
 		"forum": "http://forum.codeigniter.com/",

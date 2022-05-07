@@ -1,0 +1,25 @@
+<?php
+
+namespace Tests\Support\Database\Seeds;
+
+use CodeIgniter\Database\Seeder;
+use Tests\Support\Models\Book;
+
+class BookSeed extends Seeder
+{
+	public function run()
+	{
+		$book = new Book();
+		for ($i = 1; $i <= 50; $i++) {
+			$book->save([
+				'user_id' => 1,
+				'name' => 'book ' . $i,
+				'name_publisher' => 'Fairy Tech',
+		    	'year_publisher' => '2022',
+		    	'author' => 'Ferdiansyah',
+				'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+				'created_at' => date("Y-m-d H:i:s")
+			]);
+		}
+	}
+}

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Database\Seeds;
+namespace Tests\Support\Database\Seeds;
 
 use CodeIgniter\Database\Seeder;
-use App\Models\Borrowbook;
+use Tests\Support\Models\Borrowbook;
 
 class Borrowbookseed extends Seeder
 {
